@@ -13,6 +13,10 @@ public class GameController : MonoBehaviour
     public float startWait;
     public float waveWait;
 
+    public AudioClip musicClipOne;
+    public AudioClip musicClipTwo;
+    public AudioSource musicSource;
+
     public Text scoreText;
     public Text restartText;
     public Text gameOverText;
@@ -31,6 +35,7 @@ public class GameController : MonoBehaviour
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
+
     }
 
     void Update()
@@ -64,12 +69,16 @@ public class GameController : MonoBehaviour
                 yield return new WaitForSeconds(spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
+			
 
             if (gameOver)
             {
+		musicSource.clip = musicClipTwo;
+		musicSource.Play();
                 restartText.text = "Press 'Q' for Restart";
                 restart = true;
-                break;
+		break;
+                
             }
         }
     }
@@ -83,11 +92,15 @@ public class GameController : MonoBehaviour
     void UpdateScore()
     {
         scoreText.text = "Points: " + score;
-		if (score >= 100)
+		if (score >= 250)
 	   {
 		gameOverText.text = "You win! Game created by Alec Nicholson";
 		gameOver = true;
 		restart = true;
+		musicSource.Stop();
+		musicSource.clip = musicClipOne;
+		musicSource.Play();
+		musicSource.loop = true;
 		
 	   }
 

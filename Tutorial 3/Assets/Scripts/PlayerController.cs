@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
      public float speed;
      public float tilt;
      public Boundary boundary;
+     public AudioClip musicClipOne;
+
+     public AudioSource musicSource;
 
      public GameObject shot;
      public Transform shotSpawn;
@@ -32,6 +35,8 @@ public class PlayerController : MonoBehaviour
 	{
 	   nextFire = Time.time + fireRate;
 	   Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+	   musicSource.clip = musicClipOne;
+	   musicSource.Play();
 	} 
      }
 
